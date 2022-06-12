@@ -17,6 +17,12 @@ This is a plugin for SuchByte's MacroDeck 2
 | Light On/Off State | Indicates the On/Off State of each light | COMING SOON |
 | Light RGB Values | Shows the RGB value of your Lights | COMING SOON |
 
+## How does it work?
+
+This plugin uses the LEDNet Protocol to communicate with compatible Smart Home devices in your Local Network.
+If your devices don't show up consider restarting Macro Deck, if the problem still occurs, make sure your Devices and your Computer are in the same network.
+If there are any other issues, feel free to contact me any time
+
 ## Third Party Source
 This plugin is built using
 
