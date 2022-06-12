@@ -1,5 +1,6 @@
 # MacroDeckMagicHome
 This is a plugin for SuchByte's MacroDeck 2
+Magic Home is a Smart Home system. This plugin provides useful functions to control Compatible Devices
 
 <img alt="Macro Deck 2 Community Plugin" height="64px" align="center" href="https://macrodeck.org" src="https://macrodeck.org/images/macro_deck_2_community_plugin.png"/>
 
