@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Xenox003.MagicHome</RootNamespace>
+	<UseWindowsForms>true</UseWindowsForms>
+	<BaseOutputPath>C:\Users\Jonas\AppData\Roaming\Macro Deck\plugins\Xenox003.MagicHome</BaseOutputPath>
+	<Configurations>Debug;Release;Build</Configurations>
+	<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Macro Deck 2">
+      <HintPath>C:\Program Files\Macro Deck\Macro Deck 2.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Users\Jonas\AppData\Roaming\Macro Deck\plugins\Xenox003.MagicHome&quot;" />
+  </Target>
+
+</Project>

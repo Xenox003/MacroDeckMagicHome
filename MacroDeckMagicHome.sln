@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MacroDeckMagicHome", "MacroDeckMagicHome.csproj", "{8DF0E42D-FF5A-49EF-8A9B-BE3CC10D2F92}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Build|Any CPU = Build|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8DF0E42D-FF5A-49EF-8A9B-BE3CC10D2F92}.Build|Any CPU.ActiveCfg = Build|Any CPU
+		{8DF0E42D-FF5A-49EF-8A9B-BE3CC10D2F92}.Build|Any CPU.Build.0 = Build|Any CPU
+		{8DF0E42D-FF5A-49EF-8A9B-BE3CC10D2F92}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{8DF0E42D-FF5A-49EF-8A9B-BE3CC10D2F92}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{8DF0E42D-FF5A-49EF-8A9B-BE3CC10D2F92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DF0E42D-FF5A-49EF-8A9B-BE3CC10D2F92}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5B1CF2A3-5779-4891-B8BE-34FF9B994B06}
+	EndGlobalSection
+EndGlobal

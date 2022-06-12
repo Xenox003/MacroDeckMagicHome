@@ -1,0 +1,10 @@
+{
+  "type": "Plugin",
+  "name": "Magic Home",
+  "author": "Xenox003",
+  "repository": "https://github.com/Xenox003/MacroDeckMagicHome",
+  "packageId": "Xenox003.MagicHome",
+  "version": "1.0.0",
+  "target-plugin-api-version": 33,
+  "dll": "MacroDeckMagicHome.dll"
+}
