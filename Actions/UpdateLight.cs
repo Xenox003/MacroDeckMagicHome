@@ -61,7 +61,7 @@ namespace Xenox003.MagicHome.Actions
                                 }
                                 break;
                             default:
-                                MacroDeckLogger.Warning(new Main(), "Attempt to apply unknown state: " + config["change"]["state"].ToString());
+                                MacroDeckLogger.Warning(PluginInstance.Main, "Attempt to apply unknown state: " + config["change"]["state"].ToString());
                                 break;
                         }
                     }
