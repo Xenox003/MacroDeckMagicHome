@@ -31,13 +31,13 @@
             this.components = new System.ComponentModel.Container();
             this.labelTitle = new System.Windows.Forms.Label();
             this.containerDevices = new System.Windows.Forms.GroupBox();
+            this.buttonDeviceSearch = new SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary();
             this.boxDeviceIP = new System.Windows.Forms.TextBox();
             this.buttonDeviceSave = new SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary();
             this.buttonDeviceDelete = new SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary();
             this.buttonDeviceAdd = new SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary();
             this.listDevices = new System.Windows.Forms.ListBox();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.buttonDeviceSearch = new SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary();
+            this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
             this.containerDevices.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,6 +66,24 @@
             this.containerDevices.TabIndex = 3;
             this.containerDevices.TabStop = false;
             this.containerDevices.Text = "Device Management";
+            // 
+            // buttonDeviceSearch
+            // 
+            this.buttonDeviceSearch.BorderRadius = 8;
+            this.buttonDeviceSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDeviceSearch.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.buttonDeviceSearch.ForeColor = System.Drawing.Color.White;
+            this.buttonDeviceSearch.HoverColor = System.Drawing.Color.Empty;
+            this.buttonDeviceSearch.Icon = global::Xenox003.MagicHome.Properties.Resources.Search_450;
+            this.buttonDeviceSearch.Location = new System.Drawing.Point(215, 22);
+            this.buttonDeviceSearch.Name = "buttonDeviceSearch";
+            this.buttonDeviceSearch.Progress = 0;
+            this.buttonDeviceSearch.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(46)))), ((int)(((byte)(94)))));
+            this.buttonDeviceSearch.Size = new System.Drawing.Size(34, 34);
+            this.buttonDeviceSearch.TabIndex = 16;
+            this.buttonDeviceSearch.UseVisualStyleBackColor = true;
+            this.buttonDeviceSearch.UseWindowsAccentColor = true;
+            this.buttonDeviceSearch.Click += new System.EventHandler(this.buttonDeviceSearch_ClickAsync);
             // 
             // boxDeviceIP
             // 
@@ -138,38 +156,15 @@
             this.listDevices.Size = new System.Drawing.Size(243, 228);
             this.listDevices.TabIndex = 0;
             // 
-            // imageList1
-            // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // buttonDeviceSearch
-            // 
-            this.buttonDeviceSearch.BorderRadius = 8;
-            this.buttonDeviceSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDeviceSearch.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonDeviceSearch.ForeColor = System.Drawing.Color.White;
-            this.buttonDeviceSearch.HoverColor = System.Drawing.Color.Empty;
-            this.buttonDeviceSearch.Icon = global::Xenox003.MagicHome.Properties.Resources.Search_450;
-            this.buttonDeviceSearch.Location = new System.Drawing.Point(215, 22);
-            this.buttonDeviceSearch.Name = "buttonDeviceSearch";
-            this.buttonDeviceSearch.Progress = 0;
-            this.buttonDeviceSearch.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(46)))), ((int)(((byte)(94)))));
-            this.buttonDeviceSearch.Size = new System.Drawing.Size(34, 34);
-            this.buttonDeviceSearch.TabIndex = 16;
-            this.buttonDeviceSearch.UseVisualStyleBackColor = true;
-            this.buttonDeviceSearch.UseWindowsAccentColor = true;
-            this.buttonDeviceSearch.Click += new System.EventHandler(this.buttonDeviceSearch_Click);
-            // 
             // PluginConfigurator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            this.ClientSize = new System.Drawing.Size(444, 468);
+            this.ClientSize = new System.Drawing.Size(264, 367);
             this.Controls.Add(this.containerDevices);
             this.Controls.Add(this.labelTitle);
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "PluginConfigurator";
+            this.Load += new System.EventHandler(this.PluginConfigurator_Load);
             this.Controls.SetChildIndex(this.labelTitle, 0);
             this.Controls.SetChildIndex(this.containerDevices, 0);
             this.containerDevices.ResumeLayout(false);
@@ -186,10 +181,10 @@
         private System.Windows.Forms.GroupBox containerDevices;
         private System.Windows.Forms.ListBox listDevices;
         private SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary buttonDeviceAdd;
-        private System.Windows.Forms.ImageList imageList1;
         private SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary buttonDeviceSave;
         private SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary buttonDeviceDelete;
         private System.Windows.Forms.TextBox boxDeviceIP;
         private SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary buttonDeviceSearch;
+        private System.Windows.Forms.ToolTip toolTipMain;
     }
 }
