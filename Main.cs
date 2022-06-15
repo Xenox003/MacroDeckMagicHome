@@ -33,6 +33,8 @@ namespace Xenox003.MagicHome
                 new TestAction()
             };
 
+            DeviceManager.initialize();
+            /*
             MacroDeckLogger.Info(this, "Searching for Devices...");
             LightDiscovery.Timeout = 2000;
             discoveredLights = await LightDiscovery.DiscoverAsync();
@@ -43,6 +45,7 @@ namespace Xenox003.MagicHome
             }
 
             MacroDeckLogger.Info(this,"Found " + discoveredLights.Count.ToString() + " device(s)");
+            */
         }
 
         public override void OpenConfigurator()

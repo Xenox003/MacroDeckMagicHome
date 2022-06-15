@@ -13,6 +13,7 @@ using Xenox003.MagicHome.API;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
+using Xenox003.MagicHome.Objects;
 
 // Hi everyone reading, the code down here is very bad and can most likely be done way cleaner but am no pro in C# so here:
 
@@ -27,6 +28,7 @@ namespace Xenox003.MagicHome.Views
 
         private void updateDeviceList()
         {
+            /*
             // Get Device List from Config \\
             JObject deviceList = PluginConfig.getDeviceList();
 
@@ -41,14 +43,21 @@ namespace Xenox003.MagicHome.Views
 
                 listDevices.Items.Add(ip.ToString());
             }
+            */
+
+            listDevices.Items.Clear();
+            foreach (Device device in DeviceManager.deviceList)
+            {
+                listDevices.Items.Add(device);
+            }
         }
 
         private void buttonDeviceDelete_Click(object sender, EventArgs e)
         {
-            var selectedItem = listDevices.SelectedItem;
+            Device selectedItem = listDevices.SelectedItem as Device;
             if (selectedItem != null)
             {
-                PluginConfig.RemoveDevice(IPAddress.Parse(selectedItem.ToString()));
+                DeviceManager.removeDevice(selectedItem);
             }
 
             // Update Device List \\
@@ -57,19 +66,28 @@ namespace Xenox003.MagicHome.Views
 
         private void buttonDeviceAdd_Click(object sender, EventArgs e)
         {
+            SuchByte.MacroDeck.GUI.CustomControls.MessageBox msgBox = new SuchByte.MacroDeck.GUI.CustomControls.MessageBox();
+
             // Validate IP \\
             string ipInput = boxDeviceIP.Text;
             if (!string.IsNullOrEmpty(ipInput))
             {
                 try
                 {
-                    IPAddress deviceIP = IPAddress.Parse(ipInput);
-                    PluginConfig.AddDevice(deviceIP);
+                    IPAddress IP = IPAddress.Parse(ipInput);
+                    Device newDevice = DeviceManager.createDevice(IP);
 
                     boxDeviceIP.Text = "";
+                    DialogResult result = msgBox.ShowDialog("Device Creation", "Successfully created Device with IP Adress " + IP.ToString() + "\nDo you want to configure it now?", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes)
+                    {
+                        newDevice.Configure();
+                        updateDeviceList();
+                    }
                 }
                 catch (Exception ex)
                 {
+                    msgBox.ShowDialog("Device Creation", "Cannot create device with given IP Addess:\n" + ex.Message, MessageBoxButtons.OK);
                     MacroDeckLogger.Info(Main.Instance, "Attempt to add IP Adress " + boxDeviceIP.Text + " cancelled: \n" + ex.Message);
                 }
             }
@@ -80,13 +98,11 @@ namespace Xenox003.MagicHome.Views
 
         private void buttonDeviceEdit_Click(object sender, EventArgs e)
         {
-            var selectedItem = listDevices.SelectedItem;
+            Device selectedItem = listDevices.SelectedItem as Device;
             if (selectedItem != null)
             {
-                using (var configurator = new DeviceConfigurator(IPAddress.Parse(selectedItem.ToString())))
-                {
-                    configurator.ShowDialog();
-                }
+                selectedItem.Configure();
+                updateDeviceList();
             }
         }
 
@@ -108,11 +124,8 @@ namespace Xenox003.MagicHome.Views
             int addedCount = 0;
             foreach (Light light in discoveredLights)
             {
-                bool added = PluginConfig.AddDevice(light.getIP());
-                if (added)
-                {
-                    addedCount++;
-                }
+                DeviceManager.createDevice(light.getIP());
+                addedCount++;
             }
 
             // Enable Controls

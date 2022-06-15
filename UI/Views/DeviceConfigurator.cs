@@ -13,6 +13,7 @@ using Xenox003.MagicHome.API;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
+using Xenox003.MagicHome.Objects;
 
 // Hi everyone reading, the code down here is very bad and can most likely be done way cleaner but am no pro in C# so here:
 
@@ -20,38 +21,36 @@ namespace Xenox003.MagicHome.Views
 {
     public partial class DeviceConfigurator : DialogForm
     {
-        public IPAddress IP;
-        public JObject Config;
+        public Device device;
 
-        public DeviceConfigurator(IPAddress deviceIP)
+        public DeviceConfigurator(Device device)
         {
             InitializeComponent();
 
-            this.IP = deviceIP;
-            this.Config = PluginConfig.getDevice(deviceIP);
+            this.device = device;
 
-            this.labelDeviceIP.Text = deviceIP.ToString();
-            this.textBoxDeviceName.Text = this.Config["name"].ToString();
-            this.checkVariables.Checked = this.Config["useUpdateCycle"].ToObject<bool>();
+            this.labelDeviceIP.Text = this.device.IP.ToString();
+            this.textBoxDeviceName.Text = this.device.Name;
+            this.checkVariables.Checked = this.device.UseUpdateCycle;
 
-            this.onStateChangeBox.Text = this.Config["onStateChangeVariable"].ToString();
-            this.onColorChangeBox.Text = this.Config["onColorChangeVariable"].ToString();
+            this.onStateChangeBox.Text = this.device.onStateChangeVarName == null ? "" : this.device.onStateChangeVarName;
+            this.onColorChangeBox.Text = this.device.onColorChangeVarName == null ? "" : this.device.onColorChangeVarName;
 
             this.checkVariables_CheckedChanged(null,null);
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            if (this.textBoxDeviceName.Text != "") PluginConfig.UpdateDevice(this.IP, "name", this.textBoxDeviceName.Text);
-            PluginConfig.UpdateDevice(this.IP, "useUpdateCycle", this.checkVariables.Checked);
-            if (this.checkVariables.Checked)
+            if (this.textBoxDeviceName.Text != "") device.setName(this.textBoxDeviceName.Text);
+            device.UseUpdateCycle = this.checkVariables.Checked;
+            if (device.UseUpdateCycle)
             {
-                PluginConfig.UpdateDevice(this.IP, "onStateChangeVariable", this.onStateChangeBox.Text);
-                PluginConfig.UpdateDevice(this.IP, "onStateColorVariable", this.onColorChangeBox.Text);
+                device.setOnStateChangeVarName(this.onStateChangeBox.Text);
+                device.setOnColorChangeVarName(this.onColorChangeBox.Text);
             } else
             {
-                PluginConfig.UpdateDevice(this.IP, "onStateChangeVariable", "");
-                PluginConfig.UpdateDevice(this.IP, "onStateColorVariable", "");
+                device.setOnStateChangeVarName(null);
+                device.setOnColorChangeVarName(null);
             }
 
             this.Dispose();
