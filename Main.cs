@@ -7,6 +7,7 @@ using System.Reflection;
 using Xenox003.MagicHome.Actions;
 using Xenox003.MagicHome.Views;
 using Xenox003.MagicHome.API;
+using SuchByte.MacroDeck.Variables;
 
 namespace Xenox003.MagicHome
 {

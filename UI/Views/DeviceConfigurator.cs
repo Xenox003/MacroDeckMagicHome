@@ -27,15 +27,15 @@ namespace Xenox003.MagicHome.Views
         {
             InitializeComponent();
 
-            IP = deviceIP;
-            Config = PluginConfig.getDevice(deviceIP);
+            this.IP = deviceIP;
+            this.Config = PluginConfig.getDevice(deviceIP);
 
             this.labelDeviceIP.Text = deviceIP.ToString();
-            this.textBoxDeviceName.Text = Config["name"].ToString();
-            this.checkVariables.Checked = Config["useUpdateCycle"].ToObject<bool>();
+            this.textBoxDeviceName.Text = this.Config["name"].ToString();
+            this.checkVariables.Checked = this.Config["useUpdateCycle"].ToObject<bool>();
 
-            this.onStateChangeBox.Text = Config["onStateChangeVariable"].ToString();
-            this.onColorChangeBox.Text = Config["onColorChangeVariable"].ToString();
+            this.onStateChangeBox.Text = this.Config["onStateChangeVariable"].ToString();
+            this.onColorChangeBox.Text = this.Config["onColorChangeVariable"].ToString();
 
             this.checkVariables_CheckedChanged(null,null);
         }
@@ -55,7 +55,6 @@ namespace Xenox003.MagicHome.Views
             }
 
             this.Dispose();
-
         }
 
         private void checkVariables_CheckedChanged(object sender, EventArgs e)
