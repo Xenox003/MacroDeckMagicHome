@@ -45,7 +45,10 @@ namespace Xenox003.MagicHome
             if (deviceList[IP.ToString()] == null)
             {
                 JObject newDevice = new JObject();
-                newDevice["testKey"] = "testValue";
+                newDevice["name"] = "";
+                newDevice["useUpdateCycle"] = "false";
+                newDevice["onStateChangeVariable"] = "";
+                newDevice["onColorChangeVariable"] = "";
 
                 deviceList[IP.ToString()] = newDevice;
 
@@ -71,6 +74,20 @@ namespace Xenox003.MagicHome
                 return true;
             }
             return false;
+        }
+        public static void UpdateDevice(IPAddress IP,String key, Object value)
+        {
+            JObject deviceList = getDeviceList();
+            if (deviceList[IP.ToString()] != null)
+            {
+                JObject device = deviceList[IP.ToString()] as JObject;
+
+                device[key] = value.ToString();
+
+                deviceList[IP.ToString()] = device;
+
+                UpdateDeviceList(deviceList);
+            }
         }
     }
 }

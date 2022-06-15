@@ -83,8 +83,7 @@ namespace Xenox003.MagicHome.Views
             var selectedItem = listDevices.SelectedItem;
             if (selectedItem != null)
             {
-                MacroDeckLogger.Info(Main.Instance, "Test");
-                using (var configurator = new DeviceConfigurator())
+                using (var configurator = new DeviceConfigurator(IPAddress.Parse(selectedItem.ToString())))
                 {
                     configurator.ShowDialog();
                 }
