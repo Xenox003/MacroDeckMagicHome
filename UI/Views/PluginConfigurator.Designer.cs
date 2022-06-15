@@ -29,33 +29,22 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.labelTitle = new System.Windows.Forms.Label();
             this.containerDevices = new System.Windows.Forms.GroupBox();
             this.buttonDeviceSearch = new SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary();
             this.boxDeviceIP = new System.Windows.Forms.TextBox();
-            this.buttonDeviceSave = new SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary();
             this.buttonDeviceDelete = new SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary();
             this.buttonDeviceAdd = new SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary();
             this.listDevices = new System.Windows.Forms.ListBox();
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
+            this.buttonDeviceEdit = new SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary();
             this.containerDevices.SuspendLayout();
             this.SuspendLayout();
             // 
-            // labelTitle
-            // 
-            this.labelTitle.AutoSize = true;
-            this.labelTitle.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelTitle.Location = new System.Drawing.Point(3, 0);
-            this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(170, 16);
-            this.labelTitle.TabIndex = 0;
-            this.labelTitle.Text = "Magic Home Plugin Config";
-            // 
             // containerDevices
             // 
+            this.containerDevices.Controls.Add(this.buttonDeviceEdit);
             this.containerDevices.Controls.Add(this.buttonDeviceSearch);
             this.containerDevices.Controls.Add(this.boxDeviceIP);
-            this.containerDevices.Controls.Add(this.buttonDeviceSave);
             this.containerDevices.Controls.Add(this.buttonDeviceDelete);
             this.containerDevices.Controls.Add(this.buttonDeviceAdd);
             this.containerDevices.Controls.Add(this.listDevices);
@@ -92,24 +81,6 @@
             this.boxDeviceIP.PlaceholderText = "IP Address";
             this.boxDeviceIP.Size = new System.Drawing.Size(243, 23);
             this.boxDeviceIP.TabIndex = 15;
-            // 
-            // buttonDeviceSave
-            // 
-            this.buttonDeviceSave.BorderRadius = 8;
-            this.buttonDeviceSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDeviceSave.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonDeviceSave.ForeColor = System.Drawing.Color.White;
-            this.buttonDeviceSave.HoverColor = System.Drawing.Color.Empty;
-            this.buttonDeviceSave.Icon = global::Xenox003.MagicHome.Properties.Resources.Save_450;
-            this.buttonDeviceSave.Location = new System.Drawing.Point(86, 22);
-            this.buttonDeviceSave.Name = "buttonDeviceSave";
-            this.buttonDeviceSave.Progress = 0;
-            this.buttonDeviceSave.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(46)))), ((int)(((byte)(94)))));
-            this.buttonDeviceSave.Size = new System.Drawing.Size(34, 34);
-            this.buttonDeviceSave.TabIndex = 14;
-            this.buttonDeviceSave.UseVisualStyleBackColor = true;
-            this.buttonDeviceSave.UseWindowsAccentColor = true;
-            this.buttonDeviceSave.Click += new System.EventHandler(this.buttonDeviceSave_Click);
             // 
             // buttonDeviceDelete
             // 
@@ -156,35 +127,48 @@
             this.listDevices.Size = new System.Drawing.Size(243, 228);
             this.listDevices.TabIndex = 0;
             // 
+            // buttonDeviceEdit
+            // 
+            this.buttonDeviceEdit.BorderRadius = 8;
+            this.buttonDeviceEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDeviceEdit.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.buttonDeviceEdit.ForeColor = System.Drawing.Color.White;
+            this.buttonDeviceEdit.HoverColor = System.Drawing.Color.Empty;
+            this.buttonDeviceEdit.Icon = global::Xenox003.MagicHome.Properties.Resources.Edit_450;
+            this.buttonDeviceEdit.Location = new System.Drawing.Point(86, 22);
+            this.buttonDeviceEdit.Name = "buttonDeviceEdit";
+            this.buttonDeviceEdit.Progress = 0;
+            this.buttonDeviceEdit.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(46)))), ((int)(((byte)(94)))));
+            this.buttonDeviceEdit.Size = new System.Drawing.Size(34, 34);
+            this.buttonDeviceEdit.TabIndex = 17;
+            this.buttonDeviceEdit.UseVisualStyleBackColor = true;
+            this.buttonDeviceEdit.UseWindowsAccentColor = true;
+            this.buttonDeviceEdit.Click += new System.EventHandler(this.buttonDeviceEdit_Click);
+            // 
             // PluginConfigurator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.ClientSize = new System.Drawing.Size(264, 367);
             this.Controls.Add(this.containerDevices);
-            this.Controls.Add(this.labelTitle);
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "PluginConfigurator";
             this.Load += new System.EventHandler(this.PluginConfigurator_Load);
-            this.Controls.SetChildIndex(this.labelTitle, 0);
             this.Controls.SetChildIndex(this.containerDevices, 0);
             this.containerDevices.ResumeLayout(false);
             this.containerDevices.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
 
         #endregion
-
-        private System.Windows.Forms.Label labelTitle;
         private System.Windows.Forms.GroupBox containerDevices;
         private System.Windows.Forms.ListBox listDevices;
         private SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary buttonDeviceAdd;
-        private SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary buttonDeviceSave;
         private SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary buttonDeviceDelete;
         private System.Windows.Forms.TextBox boxDeviceIP;
         private SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary buttonDeviceSearch;
         private System.Windows.Forms.ToolTip toolTipMain;
+        private SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary buttonDeviceEdit;
     }
 }

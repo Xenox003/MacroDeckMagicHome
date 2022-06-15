@@ -93,6 +93,16 @@ namespace Xenox003.MagicHome.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Edit_450 {
+            get {
+                object obj = ResourceManager.GetObject("Edit_450", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Save_450 {
             get {
                 object obj = ResourceManager.GetObject("Save_450", resourceCulture);

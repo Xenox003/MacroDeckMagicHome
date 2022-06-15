@@ -26,7 +26,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Views\PluginConfigurator.cs">
+    <Compile Update="UI\Views\DeviceConfigurator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UI\Views\PluginConfigurator.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
@@ -36,6 +39,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UI\CustomControls\" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
