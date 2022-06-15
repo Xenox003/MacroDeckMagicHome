@@ -7,12 +7,13 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Xenox003.MagicHome.Objects;
 
 // Magic Home API
 // By nathanielxd | https://github.com/nathanielxd/magic-home
 // Modified by Xenox003
 
-namespace Xenox003.MagicHome.API
+namespace Xenox003.MagicHome.Utils
 {
     /// <summary>Class used to discover lights on the network. </summary>
     /// <example>Here is an example on how to get all Magic Home lights available on the LAN.
@@ -48,7 +49,7 @@ namespace Xenox003.MagicHome.API
                 using (var timeoutCancellationTokenSource = new CancellationTokenSource())
                 {
                     var socketReceiveTask = socket.ReceiveAsync();
-                    socketReceiveTask.ConfigureAwait(false);
+                    _ = socketReceiveTask.ConfigureAwait(false);
 
                     var completedTask = await Task.WhenAny(socketReceiveTask, Task.Delay(Timeout, timeoutCancellationTokenSource.Token));
 
@@ -67,7 +68,7 @@ namespace Xenox003.MagicHome.API
                         if (message != DISCOVERY_MESSAGE)
                         {
                             string address = message.Split(',')[0];
-                            lights.Add(new Light(address));
+                            lights.Add(new Light(IPAddress.Parse(address)));
                         }
                     }
                 }

@@ -7,7 +7,7 @@ using System.Net;
 using System.Text;
 using Xenox003.MagicHome.Objects;
 
-namespace Xenox003.MagicHome
+namespace Xenox003.MagicHome.Manager
 {
     public class DeviceManager
     {
@@ -15,7 +15,7 @@ namespace Xenox003.MagicHome
 
         public static void initialize()
         {
-            String configStr = PluginConfiguration.GetValue(Main.Instance,"deviceList");
+            string configStr = PluginConfiguration.GetValue(Main.Instance, "deviceList");
             JArray configArray = JArray.Parse(configStr);
             if (configArray != null)
             {

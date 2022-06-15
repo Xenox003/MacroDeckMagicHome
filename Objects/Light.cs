@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading.Tasks;
+using Xenox003.MagicHome.Utils;
 
-// Magic Home API
-// By nathanielxd | https://github.com/nathanielxd/magic-home
-// Modified by Xenox003
-
-namespace Xenox003.MagicHome.API
+namespace Xenox003.MagicHome.Objects
 {
     public enum TransitionType { Gradual = 0x3a, Strobe = 0x3c, Jump = 0x3b }
     public enum LedProtocol { LEDENET, LEDENET_ORIGINAL, Unknown }
@@ -37,79 +35,41 @@ namespace Xenox003.MagicHome.API
         SevenColorsJumping = 0x38
     }
 
-    public class Light
+    public class Light : Device
     {
-        //Networking
-
-        /// <summary> The network socket of the light. </summary>
         private readonly Socket Socket;
-        /// <summary> The network endpoint of the light. </summary>
         private readonly IPEndPoint Ep;
-
-        //Properties
-
-        /// <summary> Whether the socket is connected or not. </summary>
-        public bool Connected { get; private set; } = false;
-        /// <summary> The date and time of the light. </summary>
+        
         public DateTime Time { get; private set; }
-        /// <summary> The protocol of the light. </summary>
         public LedProtocol Protocol { get; private set; } = LedProtocol.Unknown;
-        /// <summary> The color of the light. </summary>
         public Color Color { get; private set; }
-        /// <summary> The warm white value of the light. </summary>
         public byte WarmWhite { get; private set; }
-        /// <summary> The brightness of the light, from 0 to 100. </summary>
         public byte Brightness { get; private set; }
-        /// <summary> Specifies whether the light is on or off. </summary>
         public bool Power { get; private set; }
-        /// <summary> Specifies the mode of the light (Color, Preset, White, Custom). </summary>
         public LightMode Mode { get; private set; }
 
-        /// <summary>
-        /// Specifies whether or not to append checksum to outgoing requests.
-        /// True by default.
-        /// </summary>
         public bool UseCsum { get; set; } = true;
-
-        /// <summary>The receive timeout of the socket in milliseconds.</summary>
         public int Timeout { get; set; } = 1000;
 
-        //Constants
         private const int PORT = 5577;
 
-        /// <summary> Creates a new endpoint and connects to the bulb on the specified local ip address. </summary>
-        /// <param name="ip"> The IP address string of the light bulb. </param>
-        public Light(string ip)
+        public Light(IPAddress IPAddress) : base(IPAddress)
         {
             Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             Socket.ReceiveTimeout = Timeout;
 
-            IPAddress Ip = IPAddress.Parse(ip);
-            Ep = new IPEndPoint(Ip, PORT);
+            Ep = new IPEndPoint(IPAddress, PORT);
+            this.type = DeviceType.LIGHT;
         }
 
-        /// <summary> Connects the socket to the endpoint and sends a request to get light's status.
-        /// This function will call RefreshAsync();
-        /// </summary>
         public async Task ConnectAsync()
         {
             await Socket.ConnectAsync(Ep);
             Protocol = await GetProtocolAsync();
-            Connected = true;
+            this.Connected = true;
             await RefreshAsync();
         }
 
-        /// <summary> Discover Magic Home lights on the network. Uses the LightDiscovery class.</summary>
-        /// <example> Here is an example on how to get all Magic Home lights available on the LAN.
-        /// <code> var lights = Light.DiscoverAsync(); </code>
-        /// </example>
-        public static Task<List<Light>> DiscoverAsync() => LightDiscovery.DiscoverAsync();
-
-        /// <summary> Sends a request to get the light's status.
-        /// Updates this instance with current bulbs's mode, time, status, protocol, color, brightness.
-        /// 
-        /// This operation usually takes between 80 and 500 milliseconds.
-        /// </summary>
         public async Task RefreshAsync()
         {
             //Send request for status.
@@ -136,7 +96,7 @@ namespace Xenox003.MagicHome.API
                 Power = false;
 
             //Check light mode.
-            Mode = Utilis.DetermineMode(dataHex[3], dataHex[9]);
+            Mode = LightUtils.DetermineMode(dataHex[3], dataHex[9]);
 
             //Handle color property.
             switch (Mode)
@@ -256,7 +216,7 @@ namespace Xenox003.MagicHome.API
         /// <param name="speed"> The speed of the pattern from 0 to 100. </param>
         public async Task SetPresetPatternAsync(PresetPattern pattern, byte speed)
         {
-            byte delay = Utilis.SpeedToDelay(speed);
+            byte delay = LightUtils.SpeedToDelay(speed);
             await SendDataAsync(new byte[] { 0x61, Convert.ToByte(pattern), delay, 0x0f });
 
             //Populate field.
@@ -301,7 +261,7 @@ namespace Xenox003.MagicHome.API
             for (int i = 0; i < 16 - colors.Length; i++)
                 data.AddRange(new byte[] { 0, 1, 2, 3 });
 
-            data.AddRange(new byte[] { 0x00, Utilis.SpeedToDelay(speed), Convert.ToByte(transition), 0xff, 0x0f });
+            data.AddRange(new byte[] { 0x00, LightUtils.SpeedToDelay(speed), Convert.ToByte(transition), 0xff, 0x0f });
 
             byte[] dataReady = data.ToArray();
             await SendDataAsync(dataReady);
@@ -374,9 +334,9 @@ namespace Xenox003.MagicHome.API
         private void UpdateBrightness()
         {
             if (Mode == LightMode.Color)
-                Brightness = Utilis.DetermineBrightness(Color.Red, Color.Green, Color.Blue);
+                Brightness = LightUtils.DetermineBrightness(Color.Red, Color.Green, Color.Blue);
             else if (Mode == LightMode.WarmWhite)
-                Brightness = Utilis.DetermineBrightness(WarmWhite, WarmWhite, WarmWhite);
+                Brightness = LightUtils.DetermineBrightness(WarmWhite, WarmWhite, WarmWhite);
         }
 
         /// <summary> Sends data to the light. </summary>
@@ -405,39 +365,5 @@ namespace Xenox003.MagicHome.API
 
             return buffer;
         }
-        /*
-        public override string ToString()
-            => "[" + Ep.Address + "]: " +
-                "Power " + Power +
-                ", Mode " + Mode +
-                ", Color " + Color.ToString() +
-                ", Warm White" + WarmWhite +
-                ", Brightness " + Brightness +
-                ", Protocol " + Protocol +
-                ", Time " + Time;
-        */
-        public override string ToString()
-        {
-            return "" + Ep.Address;
-        }
-
-        public IPAddress getIP()
-        {
-            return Ep.Address;
-        }
-        public Boolean getPower()
-        {
-            return Power;
-        }
-
-        public string debugInfo()
-            => "[" + Ep.Address + "]: " +
-                "Power " + Power +
-                ", Mode " + Mode +
-                ", Color " + Color.ToString() +
-                ", Warm White" + WarmWhite +
-                ", Brightness " + Brightness +
-                ", Protocol " + Protocol +
-                ", Time " + Time;
     }
 }

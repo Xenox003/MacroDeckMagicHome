@@ -9,9 +9,9 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using Xenox003.MagicHome.API;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using Xenox003.MagicHome.Objects;
 
 // Hi everyone reading, the code down here is very bad and can most likely be done way cleaner but am no pro in C# so here:
 

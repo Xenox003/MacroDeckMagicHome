@@ -1,13 +1,15 @@
 ﻿using System;
+using Xenox003.MagicHome.Exceptions;
+using Xenox003.MagicHome.Objects;
 
 // Magic Home API
 // By nathanielxd | https://github.com/nathanielxd/magic-home
 // Modified by Xenox003
 
-namespace Xenox003.MagicHome.API
+namespace Xenox003.MagicHome.Utils
 {
     /// <summary> Different useful methods used in the library. </summary>
-    internal static class Utilis
+    internal static class LightUtils
     {
         /// <summary> Transforms speed (0 to 100) to light specific 'delay' property (0 to 27). </summary>
         internal static byte SpeedToDelay(byte speed)
@@ -16,7 +18,7 @@ namespace Xenox003.MagicHome.API
                 throw new MagicHomeException("Speed cannot have a value more than 100.");
 
             int inv_speed = 100 - speed;
-            byte delay = Convert.ToByte((inv_speed * (0x1f - 1)) / 100);
+            byte delay = Convert.ToByte(inv_speed * (0x1f - 1) / 100);
             delay += 1;
 
             return delay;

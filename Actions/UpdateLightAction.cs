@@ -7,12 +7,11 @@ using SuchByte.MacroDeck.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Xenox003.MagicHome.API;
 using Xenox003.MagicHome.Views;
 
 namespace Xenox003.MagicHome.Actions
 {
-    public class TestAction : PluginAction
+    public class UpdateLightAction : PluginAction
     {
         public override string Name => "Update Light";
 
@@ -25,8 +24,9 @@ namespace Xenox003.MagicHome.Actions
             return new UpdateLightConfigurator(this, actionConfigurator);
         }
 
-        public override async void Trigger(string clientId, ActionButton actionButton)
+        public override void Trigger(string clientId, ActionButton actionButton)
         {
+            /*
             JObject config = JObject.Parse(this.Configuration);
 
             List<Light> lights = Main.getDiscoveredLights();
@@ -73,6 +73,7 @@ namespace Xenox003.MagicHome.Actions
                     }
                 }
             }
+            */
         }
     }
 }

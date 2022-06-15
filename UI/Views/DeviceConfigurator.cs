@@ -9,7 +9,6 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using Xenox003.MagicHome.API;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;

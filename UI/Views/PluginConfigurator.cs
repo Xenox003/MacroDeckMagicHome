@@ -9,11 +9,12 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using Xenox003.MagicHome.API;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using Xenox003.MagicHome.Objects;
+using Xenox003.MagicHome.Manager;
+using Xenox003.MagicHome.Utils;
 
 // Hi everyone reading, the code down here is very bad and can most likely be done way cleaner but am no pro in C# so here:
 
@@ -28,23 +29,6 @@ namespace Xenox003.MagicHome.Views
 
         private void updateDeviceList()
         {
-            /*
-            // Get Device List from Config \\
-            JObject deviceList = PluginConfig.getDeviceList();
-
-            // Clear Item List \\
-            listDevices.Items.Clear();
-
-            // Update Item List \\
-            foreach (var obj in deviceList)
-            {
-                string ip = obj.Key;
-                JToken value = obj.Value;
-
-                listDevices.Items.Add(ip.ToString());
-            }
-            */
-
             listDevices.Items.Clear();
             foreach (Device device in DeviceManager.deviceList)
             {
@@ -117,12 +101,12 @@ namespace Xenox003.MagicHome.Views
 
             // Start Discovery \\
             LightDiscovery.Timeout = 2000;
-            List<Light> discoveredLights = await LightDiscovery.DiscoverAsync();
+            List<API.Light> discoveredLights = await LightDiscovery.DiscoverAsync();
 
             // Process Discovery Result \\
             int foundCount = discoveredLights.Count;
             int addedCount = 0;
-            foreach (Light light in discoveredLights)
+            foreach (API.Light light in discoveredLights)
             {
                 DeviceManager.createDevice(light.getIP());
                 addedCount++;

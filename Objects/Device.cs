@@ -3,12 +3,15 @@ using SuchByte.MacroDeck.Variables;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
-using Xenox003.MagicHome.API;
+using System.Threading.Tasks;
+using Xenox003.MagicHome.Manager;
 using Xenox003.MagicHome.Views;
 
 namespace Xenox003.MagicHome.Objects
 {
+    public enum DeviceType { LIGHT,UNDEFINED }
     public class Device
     {
         public IPAddress IP { get; private set; }
@@ -16,19 +19,12 @@ namespace Xenox003.MagicHome.Objects
         public Boolean UseUpdateCycle { get; set; } = false;
         public String onStateChangeVarName { get; private set; }
         public String onColorChangeVarName { get; private set; }
+        public DeviceType type { get; protected set; } = DeviceType.UNDEFINED;
+        public bool Connected { get; protected set; } = false;
 
         public Device(IPAddress IPAddress)
         {
             this.IP = IPAddress;
-        }
-
-        public void Configure()
-        {
-            using (var configurator = new DeviceConfigurator(this))
-            {
-                configurator.ShowDialog();
-                DeviceManager.deviceUpdateSignal();
-            }
         }
 
         public void setName(String name)
