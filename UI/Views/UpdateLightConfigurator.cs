@@ -78,6 +78,7 @@ namespace Xenox003.MagicHome.Views
 
         private void TestActionConfigurator_Load(object sender, EventArgs e)
         {
+            /*
             this.lights = Main.getDiscoveredLights();
             foreach (Light light in this.lights)
             {
@@ -125,6 +126,7 @@ namespace Xenox003.MagicHome.Views
                     }
                 }
             }
+            */
         }
 
         private void actionColorR_Scroll(object sender, EventArgs e)

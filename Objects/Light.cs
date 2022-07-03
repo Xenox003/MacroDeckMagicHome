@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuchByte.MacroDeck.Logging;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -59,14 +60,14 @@ namespace Xenox003.MagicHome.Objects
             Socket.ReceiveTimeout = Timeout;
 
             Ep = new IPEndPoint(IPAddress, PORT);
-            this.type = DeviceType.LIGHT;
         }
 
         public async Task ConnectAsync()
         {
+            MacroDeckLogger.Info(Main.Instance, Ep.ToString());
             await Socket.ConnectAsync(Ep);
             Protocol = await GetProtocolAsync();
-            this.Connected = true;
+            Connected = true;
             await RefreshAsync();
         }
 

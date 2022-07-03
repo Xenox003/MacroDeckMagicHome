@@ -30,6 +30,7 @@ namespace Xenox003.MagicHome.Views
 
             this.labelDeviceIP.Text = this.device.IP.ToString();
             this.textBoxDeviceName.Text = this.device.Name;
+            this.labelConnected.Text = this.device.Connected ? "Yes" : "No";
             this.checkVariables.Checked = this.device.UseUpdateCycle;
 
             this.onStateChangeBox.Text = this.device.onStateChangeVarName == null ? "" : this.device.onStateChangeVarName;

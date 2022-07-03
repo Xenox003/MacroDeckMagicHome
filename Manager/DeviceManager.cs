@@ -31,24 +31,44 @@ namespace Xenox003.MagicHome.Manager
             Device device = new Device(IP);
             deviceList.Add(device);
 
-            deviceUpdateSignal();
+            deviceUpdateSignal(device);
             return device;
+        }
+
+        public static Light createLight(IPAddress IP)
+        {
+            Light light = new Light(IP);
+            deviceList.Add(light);
+
+            deviceUpdateSignal(light);
+            return light;
         }
 
         public static void removeDevice(Device device)
         {
             deviceList.Remove(device);
-            deviceUpdateSignal();
+            deviceUpdateSignal(device);
         }
 
-        public static void deviceUpdateSignal()
+        public static async void deviceUpdateSignal(Device device)
         {
             JArray deviceListJson = new JArray();
-            foreach (var device in deviceList)
+            foreach (var dev in deviceList)
             {
-                deviceListJson.Add(device.toJObject());
+                deviceListJson.Add(dev.toJObject());
             }
             PluginConfiguration.SetValue(Main.Instance, "deviceList", deviceListJson.ToString());
+
+            if (device is Light)
+            {
+                Light light = device as Light;
+                if (!device.Connected)
+                {
+
+                    await light.ConnectAsync();
+                    MacroDeckLogger.Info(Main.Instance, "Connecting " + light.IP);
+                }
+            }
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Xenox003.MagicHome.Views
                 try
                 {
                     IPAddress IP = IPAddress.Parse(ipInput);
-                    Device newDevice = DeviceManager.createDevice(IP);
+                    Device newDevice = DeviceManager.createLight(IP);
 
                     boxDeviceIP.Text = "";
                     DialogResult result = msgBox.ShowDialog("Device Creation", "Successfully created Device with IP Adress " + IP.ToString() + "\nDo you want to configure it now?", MessageBoxButtons.YesNo);
@@ -101,16 +101,18 @@ namespace Xenox003.MagicHome.Views
 
             // Start Discovery \\
             LightDiscovery.Timeout = 2000;
-            List<API.Light> discoveredLights = await LightDiscovery.DiscoverAsync();
+            List<Light> discoveredLights = await LightDiscovery.DiscoverAsync();
 
+            
             // Process Discovery Result \\
             int foundCount = discoveredLights.Count;
             int addedCount = 0;
-            foreach (API.Light light in discoveredLights)
+            foreach (Light light in discoveredLights)
             {
-                DeviceManager.createDevice(light.getIP());
+                DeviceManager.createLight(light.IP);
                 addedCount++;
             }
+            
 
             // Enable Controls
             foreach (Control ctrl in containerDevices.Controls)
