@@ -6,7 +6,7 @@ using System.Text;
 // By nathanielxd | https://github.com/nathanielxd/magic-home
 // Modified by Xenox003
 
-namespace Xenox003.MagicHome.Exceptions
+namespace Xenox003.MagicHome.API
 {
     public class MagicHomeException : Exception
     {

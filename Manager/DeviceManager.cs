@@ -1,74 +1,68 @@
 ﻿using Newtonsoft.Json.Linq;
 using SuchByte.MacroDeck.Logging;
-using SuchByte.MacroDeck.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
-using Xenox003.MagicHome.Objects;
+using Xenox003.MagicHome.API;
 
 namespace Xenox003.MagicHome.Manager
 {
     public class DeviceManager
     {
-        public static List<Device> deviceList { get; private set; } = new List<Device>();
+        public static List<Light> deviceList { get; private set; } = new List<Light>();
 
-        public static void initialize()
+        public static async void initialize()
         {
-            string configStr = PluginConfiguration.GetValue(Main.Instance, "deviceList");
-            JArray configArray = JArray.Parse(configStr);
-            if (configArray != null)
+            // Config Load
+            JArray deviceList = PluginConfigManager.getDeviceList();
+            
+            foreach (var token in deviceList)
             {
-                foreach (JToken token in configArray)
-                {
-                    JObject obj = token as JObject;
-                    deviceList.Add(Device.fromJObject(obj));
-                }
+                MacroDeckLogger.Info(Main.Instance, "1");
+                JObject obj = token as JObject;
+                deviceList.Add(Light.fromJObject(obj));
+            }
+
+            
+            // Light Discovery
+            LightDiscovery.Timeout = PluginConfigManager.getDiscoveryTimeout();
+            List<Light> discoveredLights = await LightDiscovery.DiscoverAsync();
+
+            foreach (Light device in discoveredLights)
+            {
+                createDevice(device.getIP());
             }
         }
-        public static Device createDevice(IPAddress IP)
+
+        public static Light createDevice(IPAddress IP)
         {
-            Device device = new Device(IP);
+            Light device = new Light(IP.ToString());
             deviceList.Add(device);
 
-            deviceUpdateSignal(device);
+            updateDeviceSignal(device);
             return device;
         }
-
-        public static Light createLight(IPAddress IP)
-        {
-            Light light = new Light(IP);
-            deviceList.Add(light);
-
-            deviceUpdateSignal(light);
-            return light;
-        }
-
-        public static void removeDevice(Device device)
+        public static void removeDevice(Light device)
         {
             deviceList.Remove(device);
-            deviceUpdateSignal(device);
+            updateDeviceListConfig();
         }
 
-        public static async void deviceUpdateSignal(Device device)
+        public static void updateDeviceListConfig()
         {
-            JArray deviceListJson = new JArray();
-            foreach (var dev in deviceList)
-            {
-                deviceListJson.Add(dev.toJObject());
-            }
-            PluginConfiguration.SetValue(Main.Instance, "deviceList", deviceListJson.ToString());
+            JArray deviceListJSON = new JArray();
 
-            if (device is Light)
+            foreach (var device in deviceList)
             {
-                Light light = device as Light;
-                if (!device.Connected)
-                {
-
-                    await light.ConnectAsync();
-                    MacroDeckLogger.Info(Main.Instance, "Connecting " + light.IP);
-                }
+                deviceListJSON.Add(device.toJObject());
             }
+
+            PluginConfigManager.updateDeviceList(deviceListJSON);
+        }
+        public static void updateDeviceSignal(Light device)
+        {
+            updateDeviceListConfig();
         }
     }
 }

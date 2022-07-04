@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Xenox003.MagicHome.Utils;
 
 // Magic Home API
 // By nathanielxd | https://github.com/nathanielxd/magic-home
 // Modified by Xenox003
 
-namespace Xenox003.MagicHome.Objects
+namespace Xenox003.MagicHome.API
 {
     public class Color
     {
@@ -26,15 +25,15 @@ namespace Xenox003.MagicHome.Objects
         /// <summary> Creates a new color object with red, green and blue values, from 0 to 255 (inclusive). </summary>
         public Color(byte red, byte green, byte blue)
         {
-            Red = red;
-            Green = green;
-            Blue = blue;
+            this.Red = red;
+            this.Green = green;
+            this.Blue = blue;
         }
 
         /// <summary> Creates a new color object from hexadecimal values. (ex. #0000ff) </summary>
         public Color(string hexColor)
         {
-            byte[] bytes = LightUtils.ToByteArray(hexColor);
+            byte[] bytes = Utilis.ToByteArray(hexColor);
             Red = bytes[0];
             Green = bytes[1];
             Blue = bytes[2];
