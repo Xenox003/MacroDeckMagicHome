@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SuchByte.MacroDeck.Logging;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -96,6 +97,8 @@ namespace Xenox003.MagicHome.API
         /// </summary>
         public async Task ConnectAsync()
         {
+            MacroDeckLogger.Info(Main.Instance, "Connecting with " + this.getIP().ToString());
+
             await Socket.ConnectAsync(Ep);
             Protocol = await GetProtocolAsync();
             Connected = true;
@@ -459,6 +462,11 @@ namespace Xenox003.MagicHome.API
             light.Name = obj["name"].ToString();
 
             return light;
+        }
+
+        public void setName(String name)
+        {
+            this.Name = name;
         }
     }
 }

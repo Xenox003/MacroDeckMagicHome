@@ -34,15 +34,23 @@ namespace Xenox003.MagicHome.UI.Views
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PluginConfigurator));
             this.listDevices = new System.Windows.Forms.ListBox();
             this.containerDevice = new System.Windows.Forms.GroupBox();
+            this.labelDeviceIP = new System.Windows.Forms.Label();
+            this.labelDeviceName = new System.Windows.Forms.Label();
+            this.textBoxDeviceName = new SuchByte.MacroDeck.GUI.CustomControls.RoundedTextBox();
             this.labelDeviceIPTitle = new System.Windows.Forms.Label();
             this.buttonDeviceAdd = new SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary();
             this.buttonDeviceRemove = new SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary();
             this.buttonDeviceDiscover = new SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary();
             this.labelDevices = new System.Windows.Forms.Label();
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.roundedTextBox1 = new SuchByte.MacroDeck.GUI.CustomControls.RoundedTextBox();
-            this.labelDeviceIP = new System.Windows.Forms.Label();
+            this.textBoxNew = new System.Windows.Forms.TextBox();
+            this.labelDiscoveryTimeout = new System.Windows.Forms.Label();
+            this.textBoxDiscoveryTimeout = new SuchByte.MacroDeck.GUI.CustomControls.RoundedTextBox();
+            this.labelDiscoveryTimeoutSuffix = new System.Windows.Forms.Label();
+            this.buttonDiscoveryTimeoutSave = new SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary();
+            this.buttonSaveDevice = new SuchByte.MacroDeck.GUI.CustomControls.ButtonPrimary();
+            this.labelDeviceConnectedTitle = new System.Windows.Forms.Label();
+            this.labelDeviceConnected = new System.Windows.Forms.Label();
             this.containerDevice.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,23 +58,67 @@ namespace Xenox003.MagicHome.UI.Views
             // 
             this.listDevices.FormattingEnabled = true;
             this.listDevices.ItemHeight = 16;
-            this.listDevices.Location = new System.Drawing.Point(4, 58);
+            this.listDevices.Location = new System.Drawing.Point(4, 90);
             this.listDevices.Name = "listDevices";
-            this.listDevices.Size = new System.Drawing.Size(172, 228);
+            this.listDevices.Size = new System.Drawing.Size(172, 196);
             this.listDevices.TabIndex = 2;
+            this.listDevices.SelectedIndexChanged += new System.EventHandler(this.listDevices_SelectedIndexChanged);
             // 
             // containerDevice
             // 
+            this.containerDevice.Controls.Add(this.labelDeviceConnected);
+            this.containerDevice.Controls.Add(this.labelDeviceConnectedTitle);
+            this.containerDevice.Controls.Add(this.buttonSaveDevice);
             this.containerDevice.Controls.Add(this.labelDeviceIP);
-            this.containerDevice.Controls.Add(this.label1);
-            this.containerDevice.Controls.Add(this.roundedTextBox1);
+            this.containerDevice.Controls.Add(this.labelDeviceName);
+            this.containerDevice.Controls.Add(this.textBoxDeviceName);
             this.containerDevice.Controls.Add(this.labelDeviceIPTitle);
             this.containerDevice.ForeColor = System.Drawing.Color.White;
-            this.containerDevice.Location = new System.Drawing.Point(182, 51);
+            this.containerDevice.Location = new System.Drawing.Point(182, 54);
             this.containerDevice.Name = "containerDevice";
-            this.containerDevice.Size = new System.Drawing.Size(441, 235);
+            this.containerDevice.Size = new System.Drawing.Size(441, 232);
             this.containerDevice.TabIndex = 3;
             this.containerDevice.TabStop = false;
+            // 
+            // labelDeviceIP
+            // 
+            this.labelDeviceIP.AutoSize = true;
+            this.labelDeviceIP.Location = new System.Drawing.Point(58, 22);
+            this.labelDeviceIP.Name = "labelDeviceIP";
+            this.labelDeviceIP.Size = new System.Drawing.Size(103, 16);
+            this.labelDeviceIP.TabIndex = 4;
+            this.labelDeviceIP.Text = "000.000.000.000";
+            this.labelDeviceIP.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelDeviceName
+            // 
+            this.labelDeviceName.AutoSize = true;
+            this.labelDeviceName.Location = new System.Drawing.Point(6, 53);
+            this.labelDeviceName.Name = "labelDeviceName";
+            this.labelDeviceName.Size = new System.Drawing.Size(45, 16);
+            this.labelDeviceName.TabIndex = 3;
+            this.labelDeviceName.Text = "Name:";
+            this.labelDeviceName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // textBoxDeviceName
+            // 
+            this.textBoxDeviceName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.textBoxDeviceName.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBoxDeviceName.Icon = null;
+            this.textBoxDeviceName.Location = new System.Drawing.Point(58, 49);
+            this.textBoxDeviceName.MaxCharacters = 32767;
+            this.textBoxDeviceName.Multiline = false;
+            this.textBoxDeviceName.Name = "textBoxDeviceName";
+            this.textBoxDeviceName.Padding = new System.Windows.Forms.Padding(8, 5, 8, 5);
+            this.textBoxDeviceName.PasswordChar = false;
+            this.textBoxDeviceName.PlaceHolderColor = System.Drawing.Color.Gray;
+            this.textBoxDeviceName.PlaceHolderText = "";
+            this.textBoxDeviceName.ReadOnly = false;
+            this.textBoxDeviceName.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.textBoxDeviceName.SelectionStart = 0;
+            this.textBoxDeviceName.Size = new System.Drawing.Size(370, 25);
+            this.textBoxDeviceName.TabIndex = 2;
+            this.textBoxDeviceName.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // labelDeviceIPTitle
             // 
@@ -94,6 +146,7 @@ namespace Xenox003.MagicHome.UI.Views
             this.buttonDeviceAdd.TabIndex = 0;
             this.buttonDeviceAdd.UseVisualStyleBackColor = true;
             this.buttonDeviceAdd.UseWindowsAccentColor = true;
+            this.buttonDeviceAdd.Click += new System.EventHandler(this.buttonDeviceAdd_Click);
             // 
             // buttonDeviceRemove
             // 
@@ -111,6 +164,7 @@ namespace Xenox003.MagicHome.UI.Views
             this.buttonDeviceRemove.TabIndex = 4;
             this.buttonDeviceRemove.UseVisualStyleBackColor = true;
             this.buttonDeviceRemove.UseWindowsAccentColor = true;
+            this.buttonDeviceRemove.Click += new System.EventHandler(this.buttonDeviceRemove_Click);
             // 
             // buttonDeviceDiscover
             // 
@@ -128,6 +182,7 @@ namespace Xenox003.MagicHome.UI.Views
             this.buttonDeviceDiscover.TabIndex = 5;
             this.buttonDeviceDiscover.UseVisualStyleBackColor = true;
             this.buttonDeviceDiscover.UseWindowsAccentColor = true;
+            this.buttonDeviceDiscover.Click += new System.EventHandler(this.buttonDeviceDiscover_Click);
             // 
             // labelDevices
             // 
@@ -138,51 +193,122 @@ namespace Xenox003.MagicHome.UI.Views
             this.labelDevices.TabIndex = 6;
             this.labelDevices.Text = "Devices";
             // 
-            // label1
+            // textBoxNew
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 53);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(45, 16);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Name:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.textBoxNew.Location = new System.Drawing.Point(4, 61);
+            this.textBoxNew.Name = "textBoxNew";
+            this.textBoxNew.PlaceholderText = "Enter new IP Address";
+            this.textBoxNew.Size = new System.Drawing.Size(172, 23);
+            this.textBoxNew.TabIndex = 7;
             // 
-            // roundedTextBox1
+            // labelDiscoveryTimeout
             // 
-            this.roundedTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.roundedTextBox1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.roundedTextBox1.Icon = null;
-            this.roundedTextBox1.Location = new System.Drawing.Point(58, 49);
-            this.roundedTextBox1.MaxCharacters = 32767;
-            this.roundedTextBox1.Multiline = false;
-            this.roundedTextBox1.Name = "roundedTextBox1";
-            this.roundedTextBox1.Padding = new System.Windows.Forms.Padding(8, 5, 8, 5);
-            this.roundedTextBox1.PasswordChar = false;
-            this.roundedTextBox1.PlaceHolderColor = System.Drawing.Color.Gray;
-            this.roundedTextBox1.PlaceHolderText = "";
-            this.roundedTextBox1.ReadOnly = false;
-            this.roundedTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.roundedTextBox1.SelectionStart = 0;
-            this.roundedTextBox1.Size = new System.Drawing.Size(370, 25);
-            this.roundedTextBox1.TabIndex = 2;
-            this.roundedTextBox1.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
+            this.labelDiscoveryTimeout.AutoSize = true;
+            this.labelDiscoveryTimeout.Location = new System.Drawing.Point(188, 31);
+            this.labelDiscoveryTimeout.Name = "labelDiscoveryTimeout";
+            this.labelDiscoveryTimeout.Size = new System.Drawing.Size(117, 16);
+            this.labelDiscoveryTimeout.TabIndex = 6;
+            this.labelDiscoveryTimeout.Text = "Discovery Timeout:";
+            this.labelDiscoveryTimeout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // labelDeviceIP
+            // textBoxDiscoveryTimeout
             // 
-            this.labelDeviceIP.AutoSize = true;
-            this.labelDeviceIP.Location = new System.Drawing.Point(58, 22);
-            this.labelDeviceIP.Name = "labelDeviceIP";
-            this.labelDeviceIP.Size = new System.Drawing.Size(103, 16);
-            this.labelDeviceIP.TabIndex = 4;
-            this.labelDeviceIP.Text = "000.000.000.000";
-            this.labelDeviceIP.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.textBoxDiscoveryTimeout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.textBoxDiscoveryTimeout.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBoxDiscoveryTimeout.Icon = null;
+            this.textBoxDiscoveryTimeout.Location = new System.Drawing.Point(310, 27);
+            this.textBoxDiscoveryTimeout.MaxCharacters = 32767;
+            this.textBoxDiscoveryTimeout.Multiline = false;
+            this.textBoxDiscoveryTimeout.Name = "textBoxDiscoveryTimeout";
+            this.textBoxDiscoveryTimeout.Padding = new System.Windows.Forms.Padding(8, 5, 8, 5);
+            this.textBoxDiscoveryTimeout.PasswordChar = false;
+            this.textBoxDiscoveryTimeout.PlaceHolderColor = System.Drawing.Color.Gray;
+            this.textBoxDiscoveryTimeout.PlaceHolderText = "";
+            this.textBoxDiscoveryTimeout.ReadOnly = false;
+            this.textBoxDiscoveryTimeout.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.textBoxDiscoveryTimeout.SelectionStart = 0;
+            this.textBoxDiscoveryTimeout.Size = new System.Drawing.Size(91, 25);
+            this.textBoxDiscoveryTimeout.TabIndex = 5;
+            this.textBoxDiscoveryTimeout.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
+            // labelDiscoveryTimeoutSuffix
+            // 
+            this.labelDiscoveryTimeoutSuffix.AutoSize = true;
+            this.labelDiscoveryTimeoutSuffix.Location = new System.Drawing.Point(407, 31);
+            this.labelDiscoveryTimeoutSuffix.Name = "labelDiscoveryTimeoutSuffix";
+            this.labelDiscoveryTimeoutSuffix.Size = new System.Drawing.Size(24, 16);
+            this.labelDiscoveryTimeoutSuffix.TabIndex = 8;
+            this.labelDiscoveryTimeoutSuffix.Text = "ms";
+            this.labelDiscoveryTimeoutSuffix.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // buttonDiscoveryTimeoutSave
+            // 
+            this.buttonDiscoveryTimeoutSave.BorderRadius = 8;
+            this.buttonDiscoveryTimeoutSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDiscoveryTimeoutSave.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.buttonDiscoveryTimeoutSave.ForeColor = System.Drawing.Color.White;
+            this.buttonDiscoveryTimeoutSave.HoverColor = System.Drawing.Color.Empty;
+            this.buttonDiscoveryTimeoutSave.Icon = null;
+            this.buttonDiscoveryTimeoutSave.Location = new System.Drawing.Point(448, 29);
+            this.buttonDiscoveryTimeoutSave.Name = "buttonDiscoveryTimeoutSave";
+            this.buttonDiscoveryTimeoutSave.Progress = 0;
+            this.buttonDiscoveryTimeoutSave.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(103)))), ((int)(((byte)(205)))));
+            this.buttonDiscoveryTimeoutSave.Size = new System.Drawing.Size(75, 23);
+            this.buttonDiscoveryTimeoutSave.TabIndex = 9;
+            this.buttonDiscoveryTimeoutSave.Text = "Save";
+            this.buttonDiscoveryTimeoutSave.UseVisualStyleBackColor = true;
+            this.buttonDiscoveryTimeoutSave.UseWindowsAccentColor = true;
+            this.buttonDiscoveryTimeoutSave.Click += new System.EventHandler(this.buttonDiscoveryTimeoutSave_Click);
+            // 
+            // buttonSaveDevice
+            // 
+            this.buttonSaveDevice.BorderRadius = 8;
+            this.buttonSaveDevice.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSaveDevice.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.buttonSaveDevice.ForeColor = System.Drawing.Color.White;
+            this.buttonSaveDevice.HoverColor = System.Drawing.Color.Empty;
+            this.buttonSaveDevice.Icon = null;
+            this.buttonSaveDevice.Location = new System.Drawing.Point(360, 203);
+            this.buttonSaveDevice.Name = "buttonSaveDevice";
+            this.buttonSaveDevice.Progress = 0;
+            this.buttonSaveDevice.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(103)))), ((int)(((byte)(205)))));
+            this.buttonSaveDevice.Size = new System.Drawing.Size(75, 23);
+            this.buttonSaveDevice.TabIndex = 10;
+            this.buttonSaveDevice.Text = "Save";
+            this.buttonSaveDevice.UseVisualStyleBackColor = true;
+            this.buttonSaveDevice.UseWindowsAccentColor = true;
+            this.buttonSaveDevice.Click += new System.EventHandler(this.buttonSaveDevice_Click);
+            // 
+            // labelDeviceConnectedTitle
+            // 
+            this.labelDeviceConnectedTitle.AutoSize = true;
+            this.labelDeviceConnectedTitle.Location = new System.Drawing.Point(6, 86);
+            this.labelDeviceConnectedTitle.Name = "labelDeviceConnectedTitle";
+            this.labelDeviceConnectedTitle.Size = new System.Drawing.Size(72, 16);
+            this.labelDeviceConnectedTitle.TabIndex = 11;
+            this.labelDeviceConnectedTitle.Text = "Connected:";
+            this.labelDeviceConnectedTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelDeviceConnected
+            // 
+            this.labelDeviceConnected.AutoSize = true;
+            this.labelDeviceConnected.Location = new System.Drawing.Point(78, 86);
+            this.labelDeviceConnected.Name = "labelDeviceConnected";
+            this.labelDeviceConnected.Size = new System.Drawing.Size(37, 16);
+            this.labelDeviceConnected.TabIndex = 12;
+            this.labelDeviceConnected.Text = "------";
+            this.labelDeviceConnected.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // PluginConfigurator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(640, 312);
+            this.Controls.Add(this.buttonDiscoveryTimeoutSave);
+            this.Controls.Add(this.labelDiscoveryTimeoutSuffix);
+            this.Controls.Add(this.labelDiscoveryTimeout);
+            this.Controls.Add(this.textBoxNew);
+            this.Controls.Add(this.textBoxDiscoveryTimeout);
             this.Controls.Add(this.labelDevices);
             this.Controls.Add(this.buttonDeviceDiscover);
             this.Controls.Add(this.buttonDeviceRemove);
@@ -199,6 +325,11 @@ namespace Xenox003.MagicHome.UI.Views
             this.Controls.SetChildIndex(this.buttonDeviceRemove, 0);
             this.Controls.SetChildIndex(this.buttonDeviceDiscover, 0);
             this.Controls.SetChildIndex(this.labelDevices, 0);
+            this.Controls.SetChildIndex(this.textBoxDiscoveryTimeout, 0);
+            this.Controls.SetChildIndex(this.textBoxNew, 0);
+            this.Controls.SetChildIndex(this.labelDiscoveryTimeout, 0);
+            this.Controls.SetChildIndex(this.labelDiscoveryTimeoutSuffix, 0);
+            this.Controls.SetChildIndex(this.buttonDiscoveryTimeoutSave, 0);
             this.containerDevice.ResumeLayout(false);
             this.containerDevice.PerformLayout();
             this.ResumeLayout(false);
@@ -216,8 +347,16 @@ namespace Xenox003.MagicHome.UI.Views
         private System.Windows.Forms.Label labelDevices;
         private System.Windows.Forms.ToolTip toolTipMain;
         private System.Windows.Forms.Label labelDeviceIPTitle;
-        private System.Windows.Forms.Label label1;
-        private RoundedTextBox roundedTextBox1;
+        private System.Windows.Forms.Label labelDeviceName;
+        private RoundedTextBox textBoxDeviceName;
         private System.Windows.Forms.Label labelDeviceIP;
+        private System.Windows.Forms.TextBox textBoxNew;
+        private System.Windows.Forms.Label labelDiscoveryTimeout;
+        private RoundedTextBox textBoxDiscoveryTimeout;
+        private System.Windows.Forms.Label labelDiscoveryTimeoutSuffix;
+        private ButtonPrimary buttonDiscoveryTimeoutSave;
+        private ButtonPrimary buttonSaveDevice;
+        private System.Windows.Forms.Label labelDeviceConnected;
+        private System.Windows.Forms.Label labelDeviceConnectedTitle;
     }
 }

@@ -3,6 +3,7 @@ using SuchByte.MacroDeck.Plugins;
 using System.Collections.Generic;
 using Xenox003.MagicHome.UI.Views;
 using Xenox003.MagicHome.Manager;
+using Xenox003.MagicHome.Actions;
 
 namespace Xenox003.MagicHome
 {
@@ -22,7 +23,7 @@ namespace Xenox003.MagicHome
             // Register Actions \\
             this.Actions = new List<PluginAction>
             {
-                //new UpdateLightAction()
+                new ToggleLightAction()
             };
 
             // Init Managers

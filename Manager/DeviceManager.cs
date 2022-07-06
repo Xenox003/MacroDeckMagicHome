@@ -15,38 +15,60 @@ namespace Xenox003.MagicHome.Manager
         public static async void initialize()
         {
             // Config Load
-            JArray deviceList = PluginConfigManager.getDeviceList();
+            JArray deviceListArr = PluginConfigManager.getDeviceList();
             
-            foreach (var token in deviceList)
+            foreach (JToken token in deviceListArr)
             {
-                MacroDeckLogger.Info(Main.Instance, "1");
                 JObject obj = token as JObject;
-                deviceList.Add(Light.fromJObject(obj));
+                if (obj != null)
+                {
+                    Light light = Light.fromJObject(obj);
+                    deviceList.Add(light);
+                    updateDeviceSignal(light);
+                }
             }
-
             
+
+
             // Light Discovery
+            
             LightDiscovery.Timeout = PluginConfigManager.getDiscoveryTimeout();
             List<Light> discoveredLights = await LightDiscovery.DiscoverAsync();
 
             foreach (Light device in discoveredLights)
             {
+                
                 createDevice(device.getIP());
             }
+
         }
 
-        public static Light createDevice(IPAddress IP)
+        public static Light createDevice(IPAddress IP,bool disableDoubleCheck = false)
         {
-            Light device = new Light(IP.ToString());
-            deviceList.Add(device);
+            if (deviceList.FindAll(x => x.getIP().ToString() == IP.ToString()).Count == 0 || disableDoubleCheck == true)
+            {
+                Light device = new Light(IP.ToString());
+                deviceList.Add(device);
 
-            updateDeviceSignal(device);
-            return device;
+                updateDeviceSignal(device);
+                return device;
+            }
+            return null;
         }
         public static void removeDevice(Light device)
         {
             deviceList.Remove(device);
             updateDeviceListConfig();
+        }
+
+        public static Light getDeviceByIP(IPAddress IP)
+        {
+            List<Light> foundItems = deviceList.FindAll(x => x.getIP().ToString() == IP.ToString());
+            if (foundItems.Count != 0)
+            {
+                return foundItems[0];
+            }
+            return null;
         }
 
         public static void updateDeviceListConfig()
@@ -60,8 +82,19 @@ namespace Xenox003.MagicHome.Manager
 
             PluginConfigManager.updateDeviceList(deviceListJSON);
         }
-        public static void updateDeviceSignal(Light device)
+        public static async void updateDeviceSignal(Light device)
         {
+            if (!device.Connected)
+            {
+                try
+                {
+                    await device.ConnectAsync();
+                }
+                catch (Exception ex)
+                {
+                    MacroDeckLogger.Warning(Main.Instance, "Could not connect to device " + device.getIP() + " | " + ex.Message);
+                }
+            }
             updateDeviceListConfig();
         }
     }
