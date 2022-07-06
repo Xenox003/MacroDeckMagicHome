@@ -1,4 +1,7 @@
 # MacroDeckMagicHome
+
+## This documentation is currently outdated and will be updated upon release of this branch
+
 This is a plugin for SuchByte's MacroDeck 2
 Magic Home is a Smart Home system. This plugin provides useful functions to control Compatible Devices
 
