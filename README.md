@@ -2,10 +2,10 @@
 
 ## This documentation is currently outdated and will be updated upon release of this branch
 
-This is a plugin for SuchByte's MacroDeck 2
-Magic Home is a Smart Home system. This plugin provides useful functions to control Compatible Devices
-
+This is a plugin for SuchByte's MacroDeck 2, it does not function as a standalone app
 <img alt="Macro Deck 2 Community Plugin" height="64px" align="center" href="https://macrodeck.org" src="https://macrodeck.org/images/macro_deck_2_community_plugin.png"/>
+
+Magic Home is a Smart Home system mainly driving LED Strip controllers, this plugin provides a useful set of Actions to control your Magic Home Devices with Macro Deck.
 
 ## Features
 #### Available Actions
