@@ -11,21 +11,16 @@ Magic Home is a Smart Home system. This plugin provides useful functions to cont
 #### Available Actions
 | Action | Function | Status |
 | --- | --- | --- |
-| On/Off/Toggle | Turns your Device On or Off | LIVE |
-| RGB Color Update | Change the RGB values of your lights | LIVE |
-| Warm-White Color Update | Change the Warm-White value of your lights | COMING SOON |
+| Toggle Light | Turn you Light on or off | - |
+| Change Color | Change the RGB Values of your Light | - |
 
-#### Available Variables
-| Variable | Function | Status |
-| --- | --- | --- |
-| Light On/Off State | Indicates the On/Off State of each light | COMING SOON |
-| Light RGB Values | Shows the RGB value of your Lights | COMING SOON |
+#### Device Manager
+This plugin provides a Device Manager to dynamically add, remove or scan for Devices.
 
 ## How does it work?
 
 This plugin uses the LEDNet Protocol to communicate with compatible Smart Home devices in your Local Network.
-If your devices don't show up consider restarting Macro Deck, if the problem still occurs, make sure your Devices and your Computer are in the same network.
-If there are any other issues, feel free to contact me any time
+Sometimes you might not be able to find any devices in the Device Manager using the Discovery option, in this specific case you should consider adding the device manually using its IP Address
 
 ## Third Party Source
 This plugin is built using
