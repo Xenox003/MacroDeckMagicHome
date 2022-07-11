@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using SuchByte.MacroDeck.Logging;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -65,6 +67,8 @@ namespace Xenox003.MagicHome.API
         /// <summary> Specifies the mode of the light (Color, Preset, White, Custom). </summary>
         public LightMode Mode { get; private set; }
 
+        public String Name { get; private set; } = "";
+
         /// <summary>
         /// Specifies whether or not to append checksum to outgoing requests.
         /// True by default.
@@ -93,6 +97,8 @@ namespace Xenox003.MagicHome.API
         /// </summary>
         public async Task ConnectAsync()
         {
+            MacroDeckLogger.Info(Main.Instance, "Connecting with " + this.getIP().ToString());
+
             await Socket.ConnectAsync(Ep);
             Protocol = await GetProtocolAsync();
             Connected = true;
@@ -418,7 +424,7 @@ namespace Xenox003.MagicHome.API
         */
         public override string ToString()
         {
-            return "" + Ep.Address;
+            return "" + Ep.Address + " | " + this.Name;
         }
 
         public IPAddress getIP()
@@ -439,5 +445,28 @@ namespace Xenox003.MagicHome.API
                 ", Brightness " + Brightness +
                 ", Protocol " + Protocol +
                 ", Time " + Time;
+
+        public JObject toJObject()
+        {
+            JObject obj = new JObject();
+
+            obj["IP"] = this.getIP().ToString();
+            obj["name"] = this.Name;
+
+            return obj;
+        }
+        public static Light fromJObject(JObject obj)
+        {
+            Light light = new Light(obj["IP"].ToString());
+
+            light.Name = obj["name"].ToString();
+
+            return light;
+        }
+
+        public void setName(String name)
+        {
+            this.Name = name;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuchByte.MacroDeck.Logging;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -42,6 +43,26 @@ namespace Xenox003.MagicHome.API
         public override string ToString()
         {
             return "R" + Red + " G" + Green + " B" + Blue;
+        }
+
+        public static Color Parse(String s)
+        {
+            String[] colorSplit = s.Split(" ", StringSplitOptions.None);
+            Byte[] colors = new Byte[3];
+
+            int i = 0;
+            foreach (String colorString in colorSplit)
+            {
+                String value = colorString.Substring(1);
+
+                colors[i] = (Byte)Byte.Parse(value);
+
+                i++;
+            }
+
+            Color color = new Color(colors[0], colors[1], colors[2]);
+
+            return color;
         }
     }
 
