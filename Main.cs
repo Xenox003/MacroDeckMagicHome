@@ -1,44 +1,47 @@
 ﻿using System;
 using SuchByte.MacroDeck.Plugins;
-using SuchByte.MacroDeck.Logging;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Reflection;
+using Xenox003.MagicHome.UI.Views;
+using Xenox003.MagicHome.Manager;
 using Xenox003.MagicHome.Actions;
 using Xenox003.MagicHome.API;
+using SuchByte.MacroDeck.Logging;
 
 namespace Xenox003.MagicHome
 {
+
     public class Main : MacroDeckPlugin
     {
-        private static List<Light> discoveredLights;
+        public static Main Instance;
+        public override bool CanConfigure => true;
 
-        // Optional; If your plugin can be configured, set to "true". It'll make the "Configure" button appear in the package manager.
-        public override bool CanConfigure => false;
-
-        // Gets called when the plugin is loaded
-        public override async void Enable()
+        public Main()
         {
-            this.Actions = new List<PluginAction>
-            {
-                new TestAction()
-            };
-
-            MacroDeckLogger.Info(this, "Searching for Devices...");
-            LightDiscovery.Timeout = 2000;
-            discoveredLights = await LightDiscovery.DiscoverAsync();
-
-            foreach (var light in discoveredLights)
-            {
-                await light.ConnectAsync();
-            }
-
-            MacroDeckLogger.Info(this,"Found " + discoveredLights.Count.ToString() + " device(s)");
+            Instance = this;
         }
 
-        public static List<Light> getDiscoveredLights()
+        public override void Enable()
         {
-            return discoveredLights;
+            // Register Actions \\
+            this.Actions = new List<PluginAction>
+            {
+                new ToggleLightAction(),
+                new ChangeColorAction()
+            };
+
+            // Init Managers
+            PluginConfigManager.initialize();
+            DeviceManager.initialize();
+        }
+
+        public override void OpenConfigurator()
+        {
+            
+            using (var configurator = new PluginConfigurator())
+            {
+                configurator.ShowDialog();
+            }
+            
         }
     }
 }
