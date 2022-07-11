@@ -2,30 +2,26 @@
 
 ## This documentation is currently outdated and will be updated upon release of this branch
 
-This is a plugin for SuchByte's MacroDeck 2
-Magic Home is a Smart Home system. This plugin provides useful functions to control Compatible Devices
+This is a plugin for SuchByte's MacroDeck 2, it does not function as a standalone app
 
 <img alt="Macro Deck 2 Community Plugin" height="64px" align="center" href="https://macrodeck.org" src="https://macrodeck.org/images/macro_deck_2_community_plugin.png"/>
+
+Magic Home is a Smart Home system mainly driving LED Strip controllers, this plugin provides a useful set of Actions to control your Magic Home Devices with Macro Deck.
 
 ## Features
 #### Available Actions
 | Action | Function | Status |
 | --- | --- | --- |
-| On/Off/Toggle | Turns your Device On or Off | LIVE |
-| RGB Color Update | Change the RGB values of your lights | LIVE |
-| Warm-White Color Update | Change the Warm-White value of your lights | COMING SOON |
+| Toggle Light | Turn you Light on or off | - |
+| Change Color | Change the RGB Values of your Light | - |
 
-#### Available Variables
-| Variable | Function | Status |
-| --- | --- | --- |
-| Light On/Off State | Indicates the On/Off State of each light | COMING SOON |
-| Light RGB Values | Shows the RGB value of your Lights | COMING SOON |
+#### Device Manager
+This plugin provides a Device Manager to dynamically add, remove or scan for Devices.
 
 ## How does it work?
 
 This plugin uses the LEDNet Protocol to communicate with compatible Smart Home devices in your Local Network.
-If your devices don't show up consider restarting Macro Deck, if the problem still occurs, make sure your Devices and your Computer are in the same network.
-If there are any other issues, feel free to contact me any time
+Sometimes you might not be able to find any devices in the Device Manager using the Discovery option, in this specific case you should consider adding the device manually using its IP Address
 
 ## Third Party Source
 This plugin is built using
