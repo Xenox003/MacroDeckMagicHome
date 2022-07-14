@@ -7,7 +7,7 @@
 	<BaseOutputPath>C:\Users\Jonas\AppData\Roaming\Macro Deck\plugins\Xenox003.MagicHome</BaseOutputPath>
 	<Configurations>Debug;Release;Build</Configurations>
 	<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
-	<Version>2.0.0</Version>
+	<Version>2.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
