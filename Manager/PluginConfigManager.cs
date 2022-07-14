@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SuchByte.MacroDeck.Logging;
 using SuchByte.MacroDeck.Plugins;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace Xenox003.MagicHome.Manager
     {
         public static void initialize()
         {
-            if (PluginConfiguration.GetValue(Main.Instance, "discoveryTimeout") == null) PluginConfiguration.SetValue(Main.Instance, "discoveryTimeout", "1000");
-            if (PluginConfiguration.GetValue(Main.Instance, "deviceList") == null) PluginConfiguration.SetValue(Main.Instance, "deviceList", "[]");
+            if (String.IsNullOrEmpty(PluginConfiguration.GetValue(Main.Instance, "discoveryTimeout"))) PluginConfiguration.SetValue(Main.Instance, "discoveryTimeout", "1000");
+            if (String.IsNullOrEmpty(PluginConfiguration.GetValue(Main.Instance, "deviceList"))) PluginConfiguration.SetValue(Main.Instance, "deviceList", "[]");
         }
 
         public static void updateDiscoveryTimeout(int discoveryTimeout)
